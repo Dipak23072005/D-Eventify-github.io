@@ -1,18 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Eventify - Event Management</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventify - Professional Event Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff4757;
+            --secondary: #2f3542;
+            --light: #f1f2f6;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--light); color: var(--secondary); scroll-behavior: smooth; overflow-x: hidden; }
 
-    <link rel="stylesheet" href="style.css">
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.5rem 10%; background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow);
+        }
+        .navbar h2 { color: var(--primary); font-weight: 700; }
+        .navbar ul { display: flex; list-style: none; }
+        .navbar ul li { margin-left: 2rem; }
+        .navbar a { text-decoration: none; color: var(--secondary); font-weight: 500; transition: 0.3s; }
+        .navbar a:hover { color: var(--primary); }
+
+        .hero {
+            height: 70vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1600&q=80');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; text-align: center; padding: 0 20px;
+        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+
+        .section { padding: 5rem 10%; text-align: center; }
+        .section h2 { margin-bottom: 3rem; font-size: 2.5rem; position: relative; }
+        .section h2::after { content: ''; width: 50px; height: 4px; background: var(--primary); position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); }
+
+        .cards-wrapper { display: flex; gap: 2rem; padding: 1rem; }
+        .card { min-width: 300px; background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); transition: transform 0.4s ease; border: 1px solid rgba(0,0,0,0.05); }
+        .card:hover { transform: translateY(-15px); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-content { padding: 1.5rem; }
+        .price { color: var(--primary); font-weight: 700; font-size: 1.2rem; margin-bottom: 1rem; }
+        .card button { width: 100%; padding: 0.8rem; border: none; background: var(--primary); color: white; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+
+        .reviews { display: flex; gap: 2rem; padding: 2rem 0; }
+        .review-box { background: var(--white); padding: 2rem; border-radius: 15px; min-width: 250px; box-shadow: 5px 5px 15px rgba(0,0,0,0.05); font-style: italic; border-left: 5px solid var(--primary); }
+
+        .popup { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; backdrop-filter: blur(5px); }
+        .popup-content { background: white; width: 90%; max-width: 450px; margin: 10vh auto; padding: 2.5rem; border-radius: 20px; position: relative; animation: slideIn 0.4s ease; }
+        @keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .popup-content input { width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+        .close { position: absolute; right: 20px; top: 15px; cursor: pointer; font-size: 28px; color: #999; }
+
+        .contact-container { display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; text-align: left; }
+        .contact-card { background: var(--primary); color: white; padding: 2rem; border-radius: 20px; display: flex; flex-direction: column; justify-content: center; }
+        .contact-form input, .contact-form textarea { width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 10px; }
+    </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
-    <h2>🎉 Eventify 🎉</h2>
+    <h2>🎉 Eventify</h2>
     <ul>
         <li><a href="#about">About</a></li>
         <li><a href="#events">Events</a></li>
@@ -21,135 +76,117 @@
     </ul>
 </nav>
 
-<!-- HERO -->
 <section class="hero" id="about">
     <h1>Plan Your Dream Event!</h1>
-    <p>Professional Event Planning Services</p>
+    <p>We handle the details, you make the memories.</p>
 </section>
 
-<!-- EVENTS -->
 <section id="events" class="section">
-    <h2>Our Events</h2>
-
-    <marquee scrollamount="6">
-        <div class="cards">
-
+    <h2>Our Signature Events</h2>
+    <marquee scrollamount="8" onmouseover="this.stop();" onmouseout="this.start();">
+        <div class="cards-wrapper">
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2">
-                <h3>Music Concert</h3>
-                <p>₹15000</p>
-                <button onclick="openBooking('Music Concert','15000')">Book</button>
+                <img src="https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?auto=format&fit=crop&w=400&q=80">
+                <div class="card-content">
+                    <h3>Music Concert</h3>
+                    <p class="price">₹15,000 onwards</p>
+                    <button onclick="openBooking('Music Concert','15000')">Book Now</button>
+                </div>
             </div>
-
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df">
-                <h3>Corporate Event</h3>
-                <p>₹25000</p>
-                <button onclick="openBooking('Corporate Event','25000')">Book</button>
+                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=400&q=80">
+                <div class="card-content">
+                    <h3>Grand Wedding</h3>
+                    <p class="price">₹50,000 onwards</p>
+                    <button onclick="openBooking('Grand Wedding','50000')">Book Now</button>
+                </div>
             </div>
-
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6">
-                <h3>Workshop</h3>
-                <p>₹10000</p>
-                <button onclick="openBooking('Workshop','10000')">Book</button>
+                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=400&q=80">
+                <div class="card-content">
+                    <h3>Corporate Event</h3>
+                    <p class="price">₹25,000 onwards</p>
+                    <button onclick="openBooking('Corporate Event','25000')">Book Now</button>
+                </div>
             </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622">
-                <h3>Wedding</h3>
-                <p>₹50000</p>
-                <button onclick="openBooking('Wedding','50000')">Book</button>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30">
-                <h3>Birthday Party</h3>
-                <p>₹8000</p>
-                <button onclick="openBooking('Birthday Party','8000')">Book</button>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1521335629791-ce4aec67dd47">
-                <h3>College Fest</h3>
-                <p>₹20000</p>
-                <button onclick="openBooking('College Fest','20000')">Book</button>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d">
-                <h3>Seminar</h3>
-                <p>₹12000</p>
-                <button onclick="openBooking('Seminar','12000')">Book</button>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad">
-                <h3>Engagement</h3>
-                <p>₹30000</p>
-                <button onclick="openBooking('Engagement','30000')">Book</button>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1515169067868-5387ec356754">
-                <h3>DJ Night</h3>
-                <p>₹18000</p>
-                <button onclick="openBooking('DJ Night','18000')">Book</button>
-            </div>
-
         </div>
     </marquee>
 </section>
 
-<!-- CLIENTS -->
-<section id="clients" class="section light">
-    <h2>Our Clients</h2>
-
-    <marquee direction="right" scrollamount="5">
-        <div class="reviews">
-            <div class="review-box">Rahul Sharma - Excellent!</div>
-            <div class="review-box">Pooja Patil - Amazing wedding!</div>
-            <div class="review-box">Amit Verma - Highly recommended!</div>
-            <div class="review-box">Sneha Joshi - Smooth service!</div>
-            <div class="review-box">Rohit Singh - Professional!</div>
-            <div class="review-box">Neha Kulkarni - Great work!</div>
-        </div>
-    </marquee>
-</section>
-
-<!-- BOOKING POPUP -->
 <div id="bookingForm" class="popup">
     <div class="popup-content">
         <span class="close" onclick="closeBooking()">&times;</span>
-
-        <h2>Book Event</h2>
-
-        <input type="text" id="eventName" readonly>
-        <input type="text" id="userName" placeholder="Your Name">
-        <input type="email" id="userEmail" placeholder="Email">
-        <input type="number" id="guests" placeholder="Guests">
-
-        <button onclick="submitBooking()">Confirm Booking</button>
+        <h2>Reserve Your Date</h2>
+        <input type="text" id="eventName" readonly style="background: #eee; font-weight: bold;">
+        <input type="text" id="userName" placeholder="Full Name" required>
+        <input type="email" id="userEmail" placeholder="Email Address" required>
+        <input type="number" id="guests" placeholder="Estimated Guests" required>
+        <button onclick="submitBooking()" style="width: 100%; padding: 1rem; background: #ff4757; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;">Confirm Booking</button>
     </div>
 </div>
 
-<!-- CONTACT -->
 <section id="contact" class="section">
-    <h2>Contact Us</h2>
-
-    <div class="contact-card">
-        <h3>👤 Dipak Sawant</h3>
-        <p>📧 sawantdipak653@gmail.com</p>
-    </div>
-
-    <div class="contact-form">
-        <input type="text" id="cname" placeholder="Your Name">
-        <input type="email" id="cemail" placeholder="Your Email">
-        <textarea id="cmsg" placeholder="Your Message"></textarea>
-        <button onclick="submitContact()">Send Message</button>
+    <h2>Get In Touch</h2>
+    <div class="contact-container">
+        <div class="contact-card">
+            <h3>👤 Dipak Sawant</h3>
+            <p>📍 Maharashtra, India</p>
+            <p>📧 sawantdipak653@gmail.com</p>
+        </div>
+        <div class="contact-form">
+            <input type="text" id="cname" placeholder="Your Name">
+            <input type="email" id="cemail" placeholder="Your Email">
+            <textarea id="cmsg" placeholder="Tell us about your event..."></textarea>
+            <button onclick="submitContact()" style="background: var(--secondary); color: white; padding: 1rem 2rem; border: none; border-radius: 10px; cursor: pointer;">Send Message</button>
+        </div>
     </div>
 </section>
 
-<script src="script.js"></script>
+<script>
+    const BACKEND_URL = "http://localhost:3000";
+
+    function openBooking(name, price) {
+        document.getElementById('bookingForm').style.display = 'block';
+        document.getElementById('eventName').value = name;
+    }
+
+    function closeBooking() {
+        document.getElementById('bookingForm').style.display = 'none';
+    }
+
+    async function submitBooking() {
+        const name = document.getElementById('userName').value;
+        const email = document.getElementById('userEmail').value;
+        const guests = document.getElementById('guests').value;
+        const eventType = document.getElementById('eventName').value;
+
+        if(!name || !email || !guests) {
+            alert("Please fill all fields!");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${BACKEND_URL}/book-event`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ eventType, name, email, guests })
+            });
+
+            if (response.ok) {
+                // --- हा तो स्क्रीन पॉपअप ---
+                alert("✨ Congratulations " + name + "!\n\nYour booking for " + eventType + " is successful.\nA confirmation email has been sent to " + email);
+                closeBooking();
+            } else {
+                alert("Server error!");
+            }
+        } catch (error) {
+            alert("Please start your backend server (node server.js)");
+        }
+    }
+
+    function submitContact() {
+        alert("Thank you! Dipak will contact you shortly.");
+    }
+</script>
 </body>
 </html>
